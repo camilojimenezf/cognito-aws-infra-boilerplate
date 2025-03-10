@@ -1,0 +1,14 @@
+# Environment variables
+.env.production
+.env.staging
+.env.development
+!.env.template
+
+# Terraform
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
