@@ -46,6 +46,30 @@ terraform "$COMMAND" -var-file=terraform.tfvars
 # Check exit code
 if [ $? -eq 0 ]; then
   echo "Terraform $COMMAND completed successfully for $ENVIRONMENT"
+
+  # Only generate outputs file after apply
+  if [ "$COMMAND" = "apply" ]; then
+    # Generate deployment variables file
+    OUTPUT_FILE="deployment.${ENVIRONMENT}.env"
+    echo "Generating deployment variables in $OUTPUT_FILE"
+    
+    echo "# Deployment variables for $ENVIRONMENT environment" > "$OUTPUT_FILE"
+    echo "# Generated on $(date)" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+    
+    # Extract values from terraform output
+    echo "BACKEND_ECR_REPO=$(terraform output -raw ecr_repository_url)" >> "$OUTPUT_FILE"
+    echo "BACKEND_ECS_CLUSTER=$(terraform output -raw ecs_cluster_name)" >> "$OUTPUT_FILE"
+    echo "BACKEND_ECS_SERVICE=$(terraform output -raw ecs_service_name)" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+    echo "CLOUDFRONT_S3_BUCKET=$(terraform output -raw s3_bucket_name)" >> "$OUTPUT_FILE"
+    echo "CLOUDFRONT_DISTRIBUTION_ID=$(terraform output -raw cloudfront_distribution_id)" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"
+    echo "BACKEND_API_URL=$(terraform output -raw api_url)" >> "$OUTPUT_FILE"
+    echo "FRONTEND_APP_URL=$(terraform output -raw app_url)" >> "$OUTPUT_FILE"
+    
+    echo "Deployment variables saved to $OUTPUT_FILE"
+  fi
 else
   echo "Terraform $COMMAND failed for $ENVIRONMENT"
   exit 1

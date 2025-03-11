@@ -4,6 +4,11 @@
 .env.development
 !.env.template
 
+# Output Environment Variables
+deployment.production.env
+deployment.staging.env
+deployment.development.env
+
 # Terraform
 terraform.tfvars
 *.tfstate

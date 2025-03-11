@@ -3,6 +3,16 @@ variable "aws_region" {
   type        = string
 }
 
+variable "aws_access_key" {
+  description = "AWS access key"
+  type        = string
+}
+
+variable "aws_secret_key" {
+  description = "AWS secret key"
+  type        = string
+}
+
 variable "project_name" {
   description = "Project name for resource naming"
   type        = string
@@ -10,11 +20,6 @@ variable "project_name" {
 
 variable "environment" {
   description = "Deployment environment (development, staging or production)"
-  type        = string
-}
-
-variable "profile" {
-  description = "AWS profile"
   type        = string
 }
 
