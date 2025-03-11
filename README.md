@@ -129,3 +129,58 @@ chmod +x terraform.sh
 - `db_password`: The password of the database to create.
 - `cognito_user_pool_id`: The ID of the Cognito user pool to use.
 - `cognito_app_client_id`: The ID of the Cognito app client to use.
+
+# Infrastructure Overview
+
+Now we will cover the infrastructure overview and the resources created by the terraform code.
+
+## Networking
+
+- VPC
+  - Main VPC
+  - Internet Gateway
+  - NAT Gateway
+  - Route Tables
+    - Public Route Table
+    - Private Route Table
+  - Subnets
+    - Public Subnets
+    - Private Subnets
+- Security Groups
+  - ALB Security Group
+  - ECS Security Group
+- ALB
+  - Application Load Balancer
+  - Target Group
+    - Backend Target Group (for ECS tasks)
+
+## Compute
+
+- ECS Cluster
+- ECS Task Definition
+- ECS Service
+- ECR Repository
+
+## Storage
+
+- S3 Bucket
+  - Used for CloudFront Distribution
+
+## DNS
+
+- Route53 Zone
+- Certificates
+- ALB for HTTPS
+  - Update ALB to use HTTPS and the certificate
+  - Redirect rule HTTP to HTTPS
+
+## Integrations
+
+- CloudFront Distribution
+- Route53 Records
+
+## Database
+
+- RDS Instance
+- Security Group
+- Subnet Group
